@@ -1,14 +1,9 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 #include <Wire.h>
 #include <MPU6050.h>
 #include <SoftwareSerial.h>
 
-SoftwareSerial BTSerial(0, 1); // RX, TX pins for HC-05 module
+// RX, TX pins for HC-05 module
+SoftwareSerial BTSerial(2, 3); // Change to 2, 3 for SoftwareSerial to work correctly
 
 MPU6050 mpu;
 
@@ -45,16 +40,16 @@ void loop() {
   float roll = atan2(-accX, sqrt(accY * accY + accZ * accZ)) * 180 / PI;
   
   // Print roll and pitch angles for debugging
-  Serial.print("pitch ");
+  Serial.print("Pitch: ");
   Serial.print(pitch);
-  Serial.print(" degrees, roll: ");
+  Serial.print(" degrees, Roll: ");
   Serial.print(roll);
   Serial.println(" degrees");
   
   // Send roll and pitch angles over Bluetooth
-  BTSerial.print("Pitch:");
+  BTSerial.print("Pitch: ");
   BTSerial.print(pitch);
-  BTSerial.print(" degrees, Roll:");
+  BTSerial.print(" degrees, Roll: ");
   BTSerial.print(roll);
   BTSerial.println(" degrees");
 
@@ -63,31 +58,3 @@ void loop() {
 
   delay(1000); // Delay for 1 second before reading again
 }
-a  
-  // Convert raw gyroscope data to meaningful units (angular velocity in degrees per second)
-  float gyroX = gx / 131.0; // 131 LSB per degree per second for the gyroscope
-  float gyroY = gy / 131.0;
-  float gyroZ = gz / 131.0;
-  
-  // Calculate roll angle (rotation around X-axis) using accelerometer data
-  float pitch = atan2(accY, accZ) * 180 / PI;
-  
-  // Calculate pitch angle (rotation around Y-axis) using accelerometer data
-  float roll = atan2(-accX, sqrt(accY * accY + accZ * accZ)) * 180 / PI;
-  
-  // Print roll and pitch angles for debugging
-  Serial.print("pitch ");
-  Serial.print(pitch);
-  Serial.print(" degrees, roll: ");
-  Serial.print(roll);
-  Serial.println(" degrees");
-  
-  // Send roll and pitch angles over Bluetooth
-  Serial.print("pitch ");
-  Serial.print(pitch);
-  Serial.print(" degrees, roll: ");
-  Serial.print(roll);
-  Serial.println(" degrees");
-  delay(1000); // Delay for 1 second before reading again
-}
-
